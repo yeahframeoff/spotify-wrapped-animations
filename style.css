@@ -1,0 +1,134 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.rings-container {
+  position: relative;
+  width: 600px;
+  height: 300px;
+  animation: container-width 6s infinite linear alternate;
+}
+
+@keyframes container-width {
+  to {
+    width: 1000px;
+  }
+}
+
+@property --ring-shift-base {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --ring-width {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 30px;
+}
+
+@property --mask-shift-base {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --mask-width {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 60px;
+}
+
+@property --rotation {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.rings.a {
+  --ring-shift: var(--ring-shift-base);
+  
+}
+
+.rings.b {
+  --ring-shift: calc(var(--ring-shift-base) + var(--ring-width));
+  --color-1: green;
+  --color-2: violet;
+  --mask-color-1: black;
+  --mask-color-2: transparent;
+}
+
+.rings {
+  position: absolute;
+  /* width: 300px; */
+  /* height: 300px; */
+  inset: 0;
+  /* border-radius: 50%; */
+    /* black/white rings, adjust 20px to change ring thickness */
+  background: repeating-radial-gradient(circle,
+      var(--color-1, black) calc(0px + var(--ring-shift)) calc(var(--ring-width) + var(--ring-shift)),
+      var(--color-2, white) calc(var(--ring-width) + var(--ring-shift)) calc(var(--ring-width) * 2 + var(--ring-shift)));
+  /* center on page (optional) */
+  animation: 
+    pulse-1 2s infinite linear, 
+    pulse-2 2s infinite linear alternate, 
+    pulse-3 3s infinite linear, 
+    pulse-4 45s infinite linear;
+  mask-image: repeating-linear-gradient(var(--rotation),
+        var(--mask-color-1, transparent) calc(var(--mask-shift-base)),
+        var(--mask-color-1, transparent) calc(var(--mask-width) + var(--mask-shift-base)),
+        var(--mask-color-2, black) calc(var(--mask-width) + var(--mask-shift-base)),
+        var(--mask-color-2, black) calc(var(--mask-width) * 2 + var(--mask-shift-base)));
+  
+}
+
+@keyframes pulse-1 {
+  to {
+    --ring-shift-base: calc(var(--ring-width) * 2);
+  }
+}
+
+@keyframes pulse-2 {
+  to {
+    /* --mask-width: 70px; */
+  }
+}
+
+@keyframes pulse-3 {
+  to {
+    --mask-shift-base: calc(var(--mask-width) * 2);
+  }
+}
+
+@keyframes pulse-4 {
+  to {
+    --rotation: 1turn;
+  }
+}
