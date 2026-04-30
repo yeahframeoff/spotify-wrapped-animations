@@ -23,22 +23,33 @@ body {
 }
 
 #app {
-  max-width: 1280px;
+  width: max(1280px, 80%);
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
+:root {
+  --anim-duration: 2s;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --anim-duration: 6s;
+  }
+}
+
 .rings-container {
   position: relative;
-  width: 600px;
+  margin: 0 auto;
+  width: 60%;
   height: 300px;
-  animation: container-width 6s infinite linear alternate;
+  animation: container-width var(--anim-duration) infinite linear alternate;
 }
 
 @keyframes container-width {
   to {
-    width: 1000px;
+    width: 100%;
   }
 }
 
